@@ -1,5 +1,7 @@
-class Api::V1::PostsController < ApplicationController
-    before_action :set_post, only: [:show, :update, :destroy]
+module Api
+  module V1
+    class PostsController < ApplicationController
+      before_action :set_post, only: [:show, :update, :destroy]
 
       def index
         @posts = Post.all
@@ -41,6 +43,6 @@ class Api::V1::PostsController < ApplicationController
       def post_params
         params.require(:post).permit(:title, :content)
       end
+    end
+  end
 end
-
-

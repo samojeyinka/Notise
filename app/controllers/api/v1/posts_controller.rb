@@ -5,15 +5,16 @@ module Api
 
       def index
         @posts = Post.all
-        render json: @posts
+        render json: @posts, each_serializer:  Api::V1::PostSerializer
       end
 
       def show
-        render json: @post
+        render json: @post, serializer:  Api::V1::PostSerializer
       end
 
       def create
         @post = Post.new(post_params)
+        handle_image_attachment
         if @post.save
           render json: @post, status: :created
         else
@@ -23,6 +24,7 @@ module Api
 
       def update
         if @post.update(post_params)
+          handle_image_attachment
           render json: @post
         else
           render json: @post.errors, status: :unprocessable_entity
@@ -41,8 +43,16 @@ module Api
       end
 
       def post_params
-        params.require(:post).permit(:title, :content)
+        params.require(:post).permit(:title, :content, :image)
       end
+
+      def handle_image_attachment
+        return unless params[:post][:image]
+      
+        @post.image.attach(params[:post][:image])
+      end
+
     end
   end
 end
+

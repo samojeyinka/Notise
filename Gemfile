@@ -15,6 +15,9 @@ gem 'activestorage', '~> 7.1', '>= 7.1.2'
 
 gem 'active_model_serializers'
 
+gem 'rack-cors'
+
+
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
